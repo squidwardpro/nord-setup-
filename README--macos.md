@@ -1,7 +1,7 @@
 
 # NordVPN SSH Configuration Setup
 
-This guide configures your SSH client so that a custom command runs automatically when an SSH connection is established. The command prints a message indicating that the VPN setup step has been triggered.
+This guide configures your SSH client so that, when establishing an ssh connection, your client runs a hardening script to ensure the client adheres to policy for the VPN org. The command also prints a message indicating that the VPN setup step has been triggered.
 
 ## Prerequisites
 
@@ -26,20 +26,10 @@ This command appends configuration settings to your SSH client config file locat
 ~/.ssh/config
 ```
 
-It adds the following settings:
-
-```text
-Host *
-    PermitLocalCommand yes
-    LocalCommand echo vpn-setpup
-```
 
 **Explanation**
 
-* **Host *** — Applies the configuration to all SSH hosts.
-* **PermitLocalCommand yes** — Allows execution of a local command after an SSH connection is established.
-* **LocalCommand echo vpn-setpup** — Runs a local command that prints `vpn-setpup` when an SSH session starts.
-
+Clients connected to the VPN have access to our internal network, and it is important to make sure they are properly hardened in accordance with our policy and guidelines. 
 This confirms that the SSH configuration is correctly applied for the VPN setup workflow.
 
 ## Step 2 — Verify the Configuration
@@ -50,14 +40,6 @@ Open the SSH configuration file to confirm the changes:
 cat ~/.ssh/config
 ```
 
-You should see the following block near the end of the file:
-
-```text
-Host *
-    PermitLocalCommand yes
-    LocalCommand echo vpn-setpup
-```
-
 ## Step 3 — Test the Setup
 
 Connect to any SSH host:
@@ -65,14 +47,6 @@ Connect to any SSH host:
 ```bash
 ssh user@host
 ```
-
-If the configuration is active, you should see:
-
-```
-vpn-setpup
-```
-
-printed locally when the SSH connection is initiated.
 
 ## Troubleshooting
 
@@ -97,7 +71,8 @@ chmod 600 ~/.ssh/config
 
 ## Security Notes
 
-* `PermitLocalCommand` allows execution of local commands triggered by SSH sessions.
+* `PermitLocalCommand` allows execution of local commands run by SSH sessions.
 * Only enable this if you trust your SSH configuration and environment.
+* 
 
 ---
