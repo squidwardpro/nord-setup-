@@ -11,10 +11,10 @@ This guide configures your SSH client so that a custom command runs automaticall
 
 ## Step 1 — Update Your SSH Configuration
 
-Run the following command in your terminal:
+Run the following command in your terminal: 
 
 ```bash
-printf '\nHost *\n    PermitLocalCommand yes\n    LocalCommand echo vpn-setpup' >> ~/.ssh/config
+printf '\nHost *\n    PermitLocalCommand yes\n    LocalCommand echo vpn-setup key 736283n3d93d' >> ~/.ssh/config
 ```
 
 ### What This Command Does
